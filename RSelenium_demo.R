@@ -1,76 +1,46 @@
-############################################################################################################################
-#################################### Scrapowanie Google Shopping ###########################################################
-############################################################################################################################
-## Instrukcje na podstawie https://cran.r-project.org/web/packages/RSelenium/vignettes/RSelenium-basics.html i pr?b i b??d?w
 ## 0. Updatujemy Chrome'a do najnowszej wersji
-## 1. ?ci?gamy najnowszy Selenium Server (selenium-server-standalone-x.x.x.jar): http://selenium-release.storage.googleapis.com/index.html
-## 2. ?ci?gamy najnowszy driver do Chrome'a https://sites.google.com/a/chromium.org/chromedriver/downloads
-## 3. Instalujemy pakiet R-owy RSelenium
-## 4. Uruchamiamy Selenium Server wpisujac w commandline: 
-##     >> java -Dwebdriver.chrome=C:\Users\rkobiela001\Desktop\chromedriver.exe -jar selenium-server-standalone-3.4.0.jar
-## 5. Po tym wszystkim skrypt powinien dzia?a? i b?dziemy mogli po??czy? si? z chromem przy pomocy rSelenium::remoteDriver
-############################################################################################################################
-###################################################################################################################o#########
-############################################################################################################################
+## 1. Sciagamy najnowszy Selenium Server (selenium-server-standalone-x.x.x.jar): 
+##    http://selenium-release.storage.googleapis.com/index.html
+## 2. Sciagamy najnowszy driver do Chrome'a 
+##    https://sites.google.com/a/chromium.org/chromedriver/downloads
+## 3. Instalujemy pakiet RSelenium
+## 4. Uruchamiamy Selenium Server wpisujac w wierszu polecen: 
+##    java -Dwebdriver.chrome=C:\Users\rkobiela001\Desktop\chromedriver.exe -jar selenium-server-standalone-3.4.0.jar
 
 rm(list =ls())
-if (!require('RSelenium'))
-  install.packages("RSelenium")
+# install.packages("RSelenium")
 library(RSelenium)
-library(stringi)
-library(dplyr)
 
-eans_tab <- exec.query("SELECT
-                       i.INDEX_ID,
-                       i.EAN
-                       From 
-                       dict.[Index] i
-                       where
-                       i.EAN IN (
-                       '5907610742380'
-                       ,'5902600067634'
-                       ,'5903570149764'
-                       ,'5903570147340'
-                       ,'7321908318954'
-                       ,'5906619091741'
-                       ,'5903570068003'
-                       ,'5902600067375'
-                       ,'5900058128914'
-                       ,'5903560912194'
-                       ,'5907561136245'
-                       ,'5907561136238'
-                       ,'5907610740768'
-                       ,'7321909303133')
-                       ")
-getwd()
-eans_tab <- read.csv(file='C:\\Users\\rkobiela001\\Desktop\\New folder (2)\\aaa.csv',header = FALSE, sep=';')
 
-colnames(eans_tab) <- c('INDEX_ID','EAN')
-eans_tab %>% head
-eans_tab <- eans_tab[-1,]
-eans_tab[1,]
-class(eans_tab$V2)
-eans_tab$EAN <- as.character(eans_tab[[2]])
+system("java -Dwebdriver.chrome=C:\\Users\\mcisek001\\Documents\\selenium\\chromedriver.exe 
+       -jar C:\\Users\\mcisek001\\Documents\\selenium\\selenium-server-standalone-3.4.0.jar")
 
-eans_tab$EAN <- substring(eans_tab$EAN, 1,13)
-
-eans_tab <- eans_tab %>% tail(n=320)
 
 remDr <- remoteDriver(remoteServerAddr = "localhost"
                       , port = 4444
                       , browserName = "chrome")
 
-url <- "https://www.google.pl/shopping"
+url <- "https://www.premierleague.com/players"
 
-ean <- "5903560912194"
-ean <- "5906409117231"
-eans_tab <- eans_tab %>% filter(EAN == 5908305210221)
-
-remDr$open(silent = TRUE) # open web browser
-remDr$getStatus()
+remDr$open(silent = TRUE)
+# remDr$getStatus()
 remDr$navigate(url)
 
-i <- 1
+
+for(i in 1:50){
+  webElem <- remDr$findElement("css", "body")
+  webElem$sendKeysToElement(list(key = "end"))
+}
+
+el <- remDr$findElements(using = 'css selector', "td")
+
+
+el$getElementText()
+
+el$getElementAttribute()
+el$highlightElements()
+
+
 
 scrapEan <- function(i){
   #ean=i
