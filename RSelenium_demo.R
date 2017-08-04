@@ -33,11 +33,22 @@ for(i in 1:50){
 }
 
 el <- remDr$findElements(using = 'css selector', "td")
+# el <- remDr$findElements(using = 'css selector', ".indexSection")
+
+fr <- sapply(el, function(x){x$getElementText()})
+
+fr <- sapply(el, function(x) el$getElementText(x))
+
+library(tidyverse)
+fr %>% 
+  unlist %>% 
+  matrix(nrow = 3) %>% 
+  t %>% 
+  as.data.frame
 
 
-el$getElementText()
 
-el$getElementAttribute()
+el$getElementAttribute("statusCodes")
 el$highlightElements()
 
 
