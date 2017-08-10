@@ -1,7 +1,3 @@
-rm(list = ls())
-library(jsonlite)
-library(tidyverse)
-
 url <- "https://fantasy.premierleague.com/drf/elements/"
 
 data <- fromJSON(url, flatten = TRUE)
@@ -14,7 +10,7 @@ data %>%
 
 url <- "https://fantasy.premierleague.com/drf/bootstrap-static"
 add <- fromJSON(url, flatten = TRUE)
-names(add)
+# names(add)
 
 teams <- add$teams
 teams %>% 
@@ -52,26 +48,22 @@ data %>%
 
 colnames(data)[c(1:3, 5)] <- c("name", "team", "pos", "cost")
 
+#save data of all players
+saveRDS(data, "data.rds")
+rm(desc, positions, teams, url)
+
+# ggplot(played, aes(x = influence, y = creativity, color = pos))+
+#   geom_point()+
+#   theme_minimal()
+# ggplot(played, aes(x = influence, y = threat, color = pos))+
+#   geom_point()+
+#   theme_minimal()
+# ggplot(played, aes(x = creativity, y = threat, color = pos))+
+#   geom_point()+
+#   theme_minimal()
+
 data %>% 
   filter(total_points != 0, status != 'u') -> played
-
-qplot(x = total_points, data = played, geom = "histogram", binwidth = 5)
-
-ggplot(played, aes(x = influence, y = creativity, color = pos))+
-  geom_point()+
-  theme_minimal()
-ggplot(played, aes(x = influence, y = threat, color = pos))+
-  geom_point()+
-  theme_minimal()
-ggplot(played, aes(x = creativity, y = threat, color = pos))+
-  geom_point()+
-  theme_minimal()
-
-by(played$influence, played$pos, mean)
-by(played$creativity, played$pos, mean)
-by(played$threat, played$pos, mean)
-
-
 
 data %>% 
   filter(total_points == 0, status != 'u') -> fresh
@@ -98,6 +90,39 @@ GKP %>%
 
 saveRDS(GKP, "GKP.rds")
 
+data %>% 
+  filter(pos == "GKP", status != "u", total_points == 0) %>% 
+  select(-one_of('creativity', 'threat', 'status')) -> GKP
+
+GKP %>% 
+  select(selected_by_percent, strength_overall_home:strength_defence_away) %>% 
+  apply(., 2, function(x) x/sum(x)) %>% 
+  cbind(cost = (1/GKP$cost)/sum(1/GKP$cost), .) %>% 
+  apply(., 1, prod) -> probs
+
+GKP %>% 
+  select(name:cost, code) %>% 
+  cbind(., probs) -> GKP_fresh
+
+
+data %>% 
+  filter(pos == "GKP", status != "u", total_points != 0) %>% 
+  select(-one_of('creativity', 'threat', 'status')) -> GKP
+
+GKP %>% 
+  select(selected_by_percent:strength_defence_away) %>% 
+  select(-code) %>% 
+  apply(., 2, function(x) x/sum(x)) %>% 
+  cbind(cost = (1/GKP$cost)/sum(1/GKP$cost), .) %>% 
+  apply(., 1, prod) -> probs
+
+GKP %>% 
+  select(name:cost, code) %>% 
+  cbind(., probs) -> GKP_played
+
+GKP <- list(played = GKP_played, fresh = GKP_fresh)
+saveRDS(GKP, "GKP_pf.rds")
+
 #defenders
 data %>% 
   filter(pos == "DEF", status != "u") %>% 
@@ -116,6 +141,39 @@ DEF %>%
 
 saveRDS(DEF, "DEF.rds")
 
+data %>% 
+  filter(pos == "DEF", status != "u", total_points == 0) %>% 
+  select(-one_of('status', 'threat')) -> DEF
+
+DEF %>% 
+  select(selected_by_percent, strength_overall_home:strength_defence_away) %>% 
+  apply(., 2, function(x) x/sum(x)) %>% 
+  cbind(cost = (1/DEF$cost)/sum(1/DEF$cost), .) %>% 
+  apply(., 1, prod) -> probs
+
+DEF %>% 
+  select(name:cost, code) %>% 
+  cbind(., probs) -> DEF_fresh
+
+
+data %>% 
+  filter(pos == "DEF", status != "u", total_points != 0) %>% 
+  select(-one_of('status', 'threat')) -> DEF
+
+DEF %>% 
+  select(selected_by_percent:strength_defence_away) %>% 
+  select(-code) %>% 
+  apply(., 2, function(x) x/sum(x)) %>% 
+  cbind(cost = (1/DEF$cost)/sum(1/DEF$cost), .) %>% 
+  apply(., 1, prod) -> probs
+
+DEF %>% 
+  select(name:cost, code) %>% 
+  cbind(., probs) -> DEF_played
+
+DEF <- list(played = DEF_played, fresh = DEF_fresh)
+saveRDS(DEF, "DEF_pf.rds")
+
 #midfielders
 data %>% 
   filter(pos == "MID", status != "u") %>% 
@@ -133,6 +191,38 @@ MID %>%
   cbind(., probs) -> MID
 
 saveRDS(MID, "MID.rds")
+
+data %>% 
+  filter(pos == "MID", status != "u", total_points == 0) %>% 
+  select(-one_of('status')) -> MID
+
+MID %>% 
+  select(selected_by_percent, strength_overall_home:strength_defence_away) %>% 
+  apply(., 2, function(x) x/sum(x)) %>% 
+  cbind(cost = (1/MID$cost)/sum(1/MID$cost), .) %>% 
+  apply(., 1, prod) -> probs
+
+MID %>% 
+  select(name:cost, code) %>% 
+  cbind(., probs) -> MID_fresh
+
+data %>% 
+  filter(pos == "MID", status != "u", total_points != 0) %>% 
+  select(-one_of('status')) -> MID
+
+MID %>% 
+  select(selected_by_percent:strength_defence_away) %>% 
+  select(-code) %>% 
+  apply(., 2, function(x) x/sum(x)) %>% 
+  cbind(cost = (1/MID$cost)/sum(1/MID$cost), .) %>% 
+  apply(., 1, prod) -> probs
+
+MID %>% 
+  select(name:cost, code) %>% 
+  cbind(., probs) -> MID_played
+
+MID <- list(played = MID_played, fresh = MID_fresh)
+saveRDS(MID, "MID_pf.rds")
 
 #forwards
 data %>% 
@@ -154,10 +244,42 @@ saveRDS(FWD, "FWD.rds")
 
 
 
+data %>% 
+  filter(pos == "FWD", status != "u", total_points == 0) %>% 
+  select(-one_of('status')) -> FWD
+
+FWD %>% 
+  select(selected_by_percent, strength_overall_home:strength_defence_away) %>% 
+  apply(., 2, function(x) x/sum(x)) %>% 
+  cbind(cost = (1/FWD$cost)/sum(1/FWD$cost), .) %>% 
+  apply(., 1, prod) -> probs
+
+FWD %>% 
+  select(name:cost, code) %>% 
+  cbind(., probs) -> FWD_fresh
 
 
+data %>% 
+  filter(pos == "FWD", status != "u", total_points != 0) %>% 
+  select(-one_of('status')) -> FWD
 
-add[["game-settings"]]
-l$`game-settings`
-events <- l$events
+FWD %>% 
+  select(selected_by_percent:strength_defence_away) %>% 
+  select(-code) %>% 
+  apply(., 2, function(x) x/sum(x)) %>% 
+  cbind(cost = (1/FWD$cost)/sum(1/FWD$cost), .) %>% 
+  apply(., 1, prod) -> probs
 
+FWD %>% 
+  select(name:cost, code) %>% 
+  cbind(., probs) -> FWD_played
+
+FWD <- list(played = FWD_played, fresh = FWD_fresh)
+saveRDS(FWD, "FWD_pf.rds")
+
+rm(GKP, DEF, MID, FWD, probs)
+
+
+# add[["game-settings"]]
+# l$`game-settings`
+# events <- l$events
