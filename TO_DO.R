@@ -22,10 +22,10 @@ remDr$open(silent = TRUE)
 remDr$navigate(url)
 
 webElem <- remDr$findElement(using = "css", "#ismjs-username")
-webElem$sendKeysToElement(list("michalcisek@vp.pl"))
+webElem$sendKeysToElement(list(mail))
 
 webElem <- remDr$findElement(using = "css", "#ismjs-password")
-webElem$sendKeysToElement(list("nasdaq93", key = "enter"))
+webElem$sendKeysToElement(list(password, key = "enter"))
 
 remDr$navigate("https://fantasy.premierleague.com/drf/my-team/3705646/")
 
