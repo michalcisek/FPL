@@ -45,8 +45,10 @@ if(sample_approach == TRUE){
     flush.console()
   }
 } else {
-  simulation <- pbsapply(1:nsim, function(x) sample_team(data, gkp, def, mid, fwd, 
-                                                        type = type, approach = "midfield", tolerance = 1))
+  simulation <- pbsapply(1:nsim, function(x) sample_team(data, gkp, def, mid, 
+                                                         fwd, type = type, 
+                                                         approach = "midfield", 
+                                                         tolerance = 1))
 }
 
 simulation %>% 
@@ -57,7 +59,6 @@ simulation %>%
 
 simulation <- sqldf::sqldf("select a.*, b.name, b.cost, b.pos, b.team from simulation a left join
                             data b on a.code=b.code")
-
 
 
 # Linear programming to select most valuable players ----------------------

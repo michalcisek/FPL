@@ -52,23 +52,11 @@ colnames(data)[c(1:3, 5)] <- c("name", "team", "pos", "cost")
 saveRDS(data, "data.rds")
 rm(desc, positions, teams, url)
 
-# ggplot(played, aes(x = influence, y = creativity, color = pos))+
-#   geom_point()+
-#   theme_minimal()
-# ggplot(played, aes(x = influence, y = threat, color = pos))+
-#   geom_point()+
-#   theme_minimal()
-# ggplot(played, aes(x = creativity, y = threat, color = pos))+
-#   geom_point()+
-#   theme_minimal()
-
 data %>% 
   filter(total_points != 0, status != 'u') -> played
 
 data %>% 
   filter(total_points == 0, status != 'u') -> fresh
-
-
 
 # Data preperation according to position ----------------------------------
 
@@ -278,8 +266,3 @@ FWD <- list(played = FWD_played, fresh = FWD_fresh)
 saveRDS(FWD, "FWD_pf.rds")
 
 rm(GKP, DEF, MID, FWD, probs)
-
-
-# add[["game-settings"]]
-# l$`game-settings`
-# events <- l$events

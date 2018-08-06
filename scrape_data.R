@@ -5,6 +5,7 @@ library(stringi)
 library(stringr)
 library(tidyverse)
 library(sqldf)
+library(RecordLinkage)
 
 url <- "https://fantasy.premierleague.com/player-list/"
 html <- read_html(url)
@@ -27,18 +28,12 @@ fr %>%
   mutate(Cost = as.character(Cost)) %>% 
   mutate(Cost = substr(Cost, 2, nchar(Cost))) %>% 
   mutate(Cost = as.numeric(Cost)) -> fr
-  
-levels(fr$Team)[c(2, 3, 8, 9, 11, 12, 13, 15, 16, 17, 19, 20)] <- c("AFC Bournemouth", "Brighton and Hove Albion", 
-                                         "Huddersfield Town", "Leicester City", "Manchester City", "Manchester United", 
-                                         "Newcastle United", "Tottenham Hotspur", "Stoke City", "Swansea City", 
-                                         "West Bromwich Albion", "West Ham United")
+
+club_dict <- readRDS("club_dict.rds")
+levels(fr$Team) <- club_dict[match(levels(fr$Team), club_dict$club_name_fpl), "club_name_pl"]
 
 players <- readRDS("players_database_clubs.rds")
-names(players) <- c("Arsenal", "AFC Bournemouth", "Brighton and Hove Albion", "Burnley", "Chelsea",                 
-                "Crystal Palace", "Everton", "Huddersfield Town", "Leicester City", "Liverpool",
-                "Manchester City", "Manchester United", "Newcastle United", "Southampton",        
-                "Stoke City", "Swansea City", "Tottenham Hotspur", "Watford", "West Bromwich Albion", 
-                "West Ham United")  
+names(players) <- club_dict$club_name_pl
 
 add_info <- function(row, add_data){
   df <- add_data[[as.character(row$Team)]]
@@ -71,12 +66,8 @@ add_info <- function(row, add_data){
   }
 }
 
-install.packages('RecordLinkage')
-library(RecordLinkage)
 
 lapply(1:nrow(fr), function(x) add_info(fr[x, ], players)) %>% do.call(rbind, .) -> fr1
-add_info(fr[1, ], players)
-
 
 players <- readRDS("players_database.rds")
 
@@ -107,7 +98,8 @@ players %>%
 fr1 <- sqldf("select * from players a left join fr b on (a.Name=b.Name and a.Clubs=b.Team) or 
                                                         (a.Surname=b.Name and a.Clubs=b.Team)")
 
-nrow(fr1) - sum(is.na(fr1$Points))
+colnames(fr1)[7] <- "Name_fpl"
+fr1 %>% 
+  select(-one_of("Points", "Cost")) -> fr1
 
-
-
+saveRDS(fr1, "matching_pl_fpl.rds")

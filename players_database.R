@@ -5,15 +5,19 @@
 ##    https://sites.google.com/a/chromium.org/chromedriver/downloads
 ## 3. Instalujemy pakiet RSelenium
 ## 4. Uruchamiamy Selenium Server wpisujac w wierszu polecen: 
-##    java -Dwebdriver.chrome=C:\Users\rkobiela001\Desktop\chromedriver.exe -jar selenium-server-standalone-3.4.0.jar
+##    java -Dwebdriver.chrome=C:\Users\mcisek001\Desktop\chromedriver.exe -jar selenium-server-standalone-3.4.0.jar
 
 rm(list =ls())
 # install.packages("RSelenium")
+
+library(devtools)
+#install_version("RSelenium", version = "1.7.1", repos = "https://cran.uni-muenster.de/")
 library(RSelenium)
 library(tidyverse)
 library(sqldf)
 
-system('java -Dwebdriver.chrome=chromedriver.exe -jar selenium-server-standalone-3.4.0.jar', wait = F)
+#change version of selenium
+system('java -Dwebdriver.chrome=chromedriver.exe -jar selenium-server-standalone-3.9.1.jar', wait = F)
 
 remDr <- remoteDriver(remoteServerAddr = "localhost"
                       , port = 4444

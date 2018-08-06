@@ -5,7 +5,7 @@
 ##    https://sites.google.com/a/chromium.org/chromedriver/downloads
 ## 3. Instalujemy pakiet RSelenium
 ## 4. Uruchamiamy Selenium Server wpisujac w wierszu polecen: 
-##    java -Dwebdriver.chrome=C:\Users\rkobiela001\Desktop\chromedriver.exe -jar selenium-server-standalone-3.4.0.jar
+##    java -Dwebdriver.chrome=C:\Users\mcisek001\Desktop\chromedriver.exe -jar selenium-server-standalone-3.4.0.jar
 
 rm(list =ls())
 # install.packages("RSelenium")
@@ -14,18 +14,18 @@ library(tidyverse)
 library(sqldf)
 library(pbapply)
 
-system('java -Dwebdriver.chrome=chromedriver.exe -jar selenium-server-standalone-3.4.0.jar', wait = F)
+system('java -Dwebdriver.chrome=chromedriver.exe -jar selenium-server-standalone-3.9.1.jar', wait = F)
 
 remDr <- remoteDriver(remoteServerAddr = "localhost"
                       , port = 4444
                       , browserName = "chrome")
 
+club_dict <- readRDS("club_dict.rds")
 
-club_id <- c(1, 127, 131, 43, 4, 6, 7, 159, 26, 10, 11, 12, 23, 20, 42, 45, 21, 33, 36, 25)
-
+#update url inside function - se=210 - different number
 scrape_players <- function(id, remDr){
 
-  url <- paste0("https://www.premierleague.com/players/?se=79&cl=", id)
+  url <- paste0("https://www.premierleague.com/players/?se=210&cl=", id)
   
   # remDr$getStatus()
   remDr$navigate(url)
@@ -83,9 +83,9 @@ scrape_players <- function(id, remDr){
 }
 
 remDr$open(silent = TRUE)
-players_by_clubs <- lapply(club_id, function(x) scrape_players(x, remDr))
+players_by_clubs <- lapply(club_dict$club_id_pl, function(x) scrape_players(x, remDr))
 remDr$close()
 
-rm(club_id, remDr)
+rm(remDr)
 
 saveRDS(players_by_clubs, "players_database_clubs.rds")
