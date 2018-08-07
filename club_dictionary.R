@@ -24,7 +24,11 @@ club_name_wfn <- c("Arsenal FC", "AFC Bournemouth", "Brighton & Hove Albion",
 club_id_pl <- c(1, 127, 131, 43, 46, 4, 6, 7, 34, 159, 26, 10, 11, 
                12, 23, 20, 21, 33, 25, 38)
 
-club_dict <- data.frame(club_name_pl, club_name_fpl, club_id_pl)
+#club_id_fpl - club id in FPL
+club_id_fpl <- c(3, 91, 36, 90, 97, 8, 31, 11, 54, 38, 13, 14, 43, 1, 4, 20, 6,
+                 57, 21, 39)
+
+club_dict <- data.frame(club_name_pl, club_name_fpl, club_id_pl, club_id_fpl)
 
 saveRDS(club_dict, "club_dict.rds")
 
