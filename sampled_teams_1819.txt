@@ -1,0 +1,71 @@
+MIDFIELD
+      code count             name cost pos team
+31  118748   378            Salah 13.0 MID  LIV
+61  169187   201 Alexander-Arnold  5.0 DEF  LIV
+73  182156   226             Sané  9.5 MID  MCI
+75   18726   452            Boruc  4.0 GKP  BOU
+82  197030   529           Kamara  4.5 FWD  FUL
+105  37096   583        Fabianski  4.5 GKP  WHU
+127  41320   466          Daniels  4.5 DEF  BOU
+131  41727   384          Bennett  4.0 DEF  WOL
+171  58822   300           Cédric  4.5 DEF  SOU
+181  61366   547        De Bruyne 10.0 MID  MCI
+211  80607   481          Eriksen  9.5 MID  TOT
+216  82403   381             Zaha  7.0 FWD  CRY
+222  85955   323         Jorginho  5.0 MID  CHE
+233  92217   452          Firmino  9.5 FWD  LIV
+245  98745   217         Bellerín  5.5 DEF  ARS
+
+SAMPLED
+      code count             name cost pos team
+62  169187   101 Alexander-Arnold  5.0 DEF  LIV
+66  171317   169            Neves  5.0 MID  WOL
+70  175592   108            Keita  7.5 MID  LIV
+77   18726   172            Boruc  4.0 GKP  BOU
+84  197030   184           Kamara  4.5 FWD  FUL
+106  37096   325        Fabianski  4.5 GKP  WHU
+127  41320   170          Daniels  4.5 DEF  BOU
+131  41727   202          Bennett  4.0 DEF  WOL
+170  58822   104           Cédric  4.5 DEF  SOU
+179  61366   179        De Bruyne 10.0 MID  MCI
+202  78830   224             Kane 12.5 FWD  TOT
+206  80607   152          Eriksen  9.5 MID  TOT
+216  85955   226         Jorginho  5.0 MID  CHE
+226  92217   322          Firmino  9.5 FWD  LIV
+238  98745   134         Bellerín  5.5 DEF  ARS
+
+BALANCED
+      code count             name cost pos team
+6   101582   245             Fred  6.0 MID  MUN
+46  131897   284             Ryan  4.5 GKP  BHA
+66  169187   294 Alexander-Arnold  5.0 DEF  LIV
+70  171317   319            Neves  5.0 MID  WOL
+91  197030   370           Kamara  4.5 FWD  FUL
+115  27335   275     Lichtsteiner  5.0 DEF  ARS
+119  37096   824        Fabianski  4.5 GKP  WHU
+141  41320   334          Daniels  4.5 DEF  BOU
+202  61366   371        De Bruyne 10.0 MID  MCI
+228  78830   345             Kane 12.5 FWD  TOT
+233  80607   364          Eriksen  9.5 MID  TOT
+244  85955   487         Jorginho  5.0 MID  CHE
+256  92217   831          Firmino  9.5 FWD  LIV
+262  95658   292          Maguire  5.5 DEF  LEI
+267  98745   404         Bellerín  5.5 DEF  ARS
+
+FORWARD
+      code count             name cost pos team
+6   101582   365             Fred  6.0 MID  MUN
+64  169187   234 Alexander-Arnold  5.0 DEF  LIV
+68  171317   428            Neves  5.0 MID  WOL
+72  175592   196            Keita  7.5 MID  LIV
+79  184349   276        Sessegnon  6.5 MID  FUL
+81   18726   455            Boruc  4.0 GKP  BOU
+111  37096   592        Fabianski  4.5 GKP  WHU
+114  37572   287           Agüero 11.0 FWD  MCI
+135  41320   432          Daniels  4.5 DEF  BOU
+139  41727   356          Bennett  4.0 DEF  WOL
+185  58822   250           Cédric  4.5 DEF  SOU
+221  78830   709             Kane 12.5 FWD  TOT
+234  85955   600         Jorginho  5.0 MID  CHE
+243  92217   752          Firmino  9.5 FWD  LIV
+255  98745   245         Bellerín  5.5 DEF  ARS
