@@ -1,6 +1,6 @@
 # FPL
 
-In order to run simulation before start of new FPL season run the following scripts in given order.
+In order to run simulation before start of new FPL season execute the following scripts in given order.
 
 1. **club_dictionary.R** 
     - add new clubs
