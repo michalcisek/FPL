@@ -6,18 +6,40 @@ library(stringr)
 library(tidyverse)
 library(sqldf)
 library(RecordLinkage)
+library(RSelenium)
+library(pbapply)
+
+# url <- "https://fantasy.premierleague.com/player-list/"
+# html <- read_html(url)
+# 
+# html %>% 
+#   html_nodes('td') %>%
+#   # html_nodes('.col-6') %>% 
+#   html_text() %>% 
+#   str_replace_all("[\r\n]" , "") %>% 
+#   matrix(., nrow = 4) %>% 
+#   t %>% 
+#   as.data.frame() -> fr
 
 url <- "https://fantasy.premierleague.com/player-list/"
-html <- read_html(url)
 
-html %>% 
-  html_nodes('td') %>%
-  # html_nodes('.col-6') %>% 
-  html_text() %>% 
-  str_replace_all("[\r\n]" , "") %>% 
+system('java -Dwebdriver.chrome=chromedriver.exe -jar selenium-server-standalone-3.9.1.jar', wait = F)
+
+remDr <- remoteDriver(remoteServerAddr = "localhost"
+                      , port = 4444
+                      , browserName = "chrome")
+
+remDr$open(silent = TRUE)
+remDr$navigate(url)
+
+el <- remDr$findElements("css selector", "td")
+players <- sapply(el, function(x){x$getElementText()})
+players %>% str_replace_all("[\r\n]" , "") %>% 
   matrix(., nrow = 4) %>% 
   t %>% 
   as.data.frame() -> fr
+
+remDr$close()
 
 colnames(fr) <- c("Name", "Team", "Points", "Cost")
 
@@ -86,8 +108,10 @@ get_club <- function(url){
     str_trim() 
 }
 
-clubs <- sapply(players$Links, get_club)
+clubs <- pbsapply(players$Links, get_club)
+
 clubs %>% 
+  lapply(unique) %>% 
   lapply(., function(x) if(identical(x, character(0))) NA else x) %>% 
   unlist %>% 
   unname -> clubs

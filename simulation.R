@@ -14,9 +14,9 @@ source("sample_team.R")
 #number of simulations
 nsim <- 1000
 #type of simulation - only_played or inlude_fresh
-type <- "include_fresh"
+type <- "only_played"
 #sample approach of selecting team?
-sample_approach <- F
+sample_approach <- FALSE
 
 #load data
 if(type == "include_fresh"){
@@ -47,7 +47,7 @@ if(sample_approach == TRUE){
 } else {
   simulation <- pbsapply(1:nsim, function(x) sample_team(data, gkp, def, mid, 
                                                          fwd, type = type, 
-                                                         approach = "midfield", 
+                                                         approach = "forward", 
                                                          tolerance = 1))
 }
 
@@ -57,9 +57,9 @@ simulation %>%
   c %>% 
   data.frame(code = names(.), count = .) -> simulation
 
-simulation <- sqldf::sqldf("select a.*, b.name, b.cost, b.pos, b.team from simulation a left join
-                            data b on a.code=b.code")
-
+simulation$code <- as.integer(as.character(simulation$code))
+simulation <- simulation %>% 
+  left_join(data, "code")
 
 # Linear programming to select most valuable players ----------------------
 #objective function

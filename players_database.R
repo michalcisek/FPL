@@ -11,7 +11,7 @@ rm(list =ls())
 # install.packages("RSelenium")
 
 library(devtools)
-#install_version("RSelenium", version = "1.7.1", repos = "https://cran.uni-muenster.de/")
+# install_version("RSelenium", version = "1.7.1", repos = "https://cran.uni-muenster.de/")
 library(RSelenium)
 library(tidyverse)
 library(sqldf)
@@ -25,6 +25,7 @@ remDr <- remoteDriver(remoteServerAddr = "localhost"
 
 url <- "https://www.premierleague.com/players"
 
+
 remDr$open(silent = TRUE)
 # remDr$getStatus()
 remDr$navigate(url)
@@ -32,6 +33,7 @@ remDr$navigate(url)
 for(i in 1:50){
   webElem <- remDr$findElement("css", "body")
   webElem$sendKeysToElement(list(key = "end"))
+  Sys.sleep(1)
 }
 
 # Download players, position and country ----------------------------------
@@ -49,8 +51,8 @@ players %>%
 
 colnames(players) <- c("Name", "Position", "Country")
 
-#missing Position for one player
-players[players$Name == "Josh Sims", "Position"] <- "Midfielder"
+# #missing Position for one player
+# players[players$Name == "Josh Sims", "Position"] <- "Midfielder"
 
 players %>% 
   mutate(Name = as.character(Name)) %>% 

@@ -1,29 +1,24 @@
-url <- "https://fantasy.premierleague.com/drf/elements/"
+library(jsonlite)
+library(fplr)
 
-data <- fromJSON(url, flatten = TRUE)
+
+data <- fpl_get_bootstrap()$elements
 
 data %>% 
   select(one_of('web_name', 'team_code', 'status', 'now_cost', 'selected_by_percent',
                 'total_points', 'points_per_game', 'minutes', 'influence', 'creativity',
                 'threat', 'element_type', 'code')) -> data
 
-
-url <- "https://fantasy.premierleague.com/drf/bootstrap-static"
-add <- fromJSON(url, flatten = TRUE)
-# names(add)
-
-teams <- add$teams
-teams %>% 
-  select(-one_of('current_event_fixture', 'next_event_fixture')) -> teams
+teams <- fpl_get_teams()
 
 data <- sqldf::sqldf('select a.*, b.short_name, b.strength_overall_home, b.strength_overall_away,
              b.strength_attack_home, b.strength_attack_away, b.strength_defence_home,
              b.strength_defence_away from data a left join teams b on a.team_code=b.code')
 
-positions <- add$element_types
+positions <- fpl_get_bootstrap()$element_types
 
-data <- sqldf::sqldf('select a.*, b.singular_name_short from data a left join positions b
-             on a.element_type=b.id')
+
+data <- data %>% left_join(positions, by = c("element_type" = "id"))
 
 data %>%
   select(-one_of('team_code', 'element_type')) -> data
@@ -50,7 +45,7 @@ colnames(data)[c(1:3, 5)] <- c("name", "team", "pos", "cost")
 
 #save data of all players
 saveRDS(data, "data.rds")
-rm(desc, positions, teams, url)
+rm(desc, positions, teams)
 
 data %>% 
   filter(total_points != 0, status != 'u') -> played

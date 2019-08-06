@@ -25,7 +25,7 @@ club_dict <- readRDS("club_dict.rds")
 #update url inside function - se=210 - different number
 scrape_players <- function(id, remDr){
 
-  url <- paste0("https://www.premierleague.com/players/?se=210&cl=", id)
+  url <- paste0("https://www.premierleague.com/players/?se=274&cl=", id)
   
   # remDr$getStatus()
   remDr$navigate(url)
@@ -52,10 +52,10 @@ scrape_players <- function(id, remDr){
   
   colnames(players) <- c("Name", "Position", "Country")
 
-  #missing Position for one player
-  if(id == 20){
-    players[players$Name == "Josh Sims", "Position"] <- "Midfielder"
-  }
+  # #missing Position for one player
+  # if(id == 20){
+  #   players[players$Name == "Josh Sims", "Position"] <- "Midfielder"
+  # }
   
   players %>% 
     mutate(Name = as.character(Name)) %>% 

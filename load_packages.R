@@ -23,15 +23,10 @@ if(!require(pbapply)){
   library(pbapply)
 }
 
-if(!require(jsonlite)){
-  install.packages("jsonlite")
-  library(jsonlite)
-}
-
-if(!require(RSelenium)){
-  install.packages("RSelenium")
-  library(RSelenium)
-}
+# if(!require(RSelenium)){
+#   install.packages("RSelenium")
+#   library(RSelenium)
+# }
 
 if(!require(RecordLinkage)){
   install.packages("RecordLinkage")
