@@ -1,15 +1,15 @@
 rm(list = ls())
 
 source("load_packages.R")
-source("sample_position.R")
-source("check_position_limit.R")
-source("check_team_limit.R")
-source("check_team_value.R")
-source("sample_player_GKP.R")
-source("sample_player_DEF.R")
-source("sample_player_MID.R")
-source("sample_player_FWD.R")
-source("sample_team.R")
+source("functions/sample_position.R")
+source("functions/check_position_limit.R")
+source("functions/check_team_limit.R")
+source("functions/check_team_value.R")
+source("functions/sample_player_GKP.R")
+source("functions/sample_player_DEF.R")
+source("functions/sample_player_MID.R")
+source("functions/sample_player_FWD.R")
+source("functions/sample_team.R")
 
 #number of simulations
 nsim <- 1000
