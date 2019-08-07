@@ -57,7 +57,7 @@ data %>%
 
 #goalkeepers
 data %>% 
-  filter(pos == "GKP", status != "u") %>% 
+  filter(pos == "GKP", status != "u", total_points != 0) %>% 
   select(-one_of('creativity', 'threat', 'status')) -> GKP
 
 GKP %>% 
@@ -108,7 +108,7 @@ saveRDS(GKP, "GKP_pf.rds")
 
 #defenders
 data %>% 
-  filter(pos == "DEF", status != "u") %>% 
+  filter(pos == "DEF", status != "u", total_points != 0) %>% 
   select(-one_of('status', 'threat')) -> DEF
 
 DEF %>% 
@@ -159,7 +159,7 @@ saveRDS(DEF, "DEF_pf.rds")
 
 #midfielders
 data %>% 
-  filter(pos == "MID", status != "u") %>% 
+  filter(pos == "MID", status != "u", total_points != 0) %>% 
   select(-one_of('status')) -> MID
 
 MID %>% 
@@ -209,7 +209,7 @@ saveRDS(MID, "MID_pf.rds")
 
 #forwards
 data %>% 
-  filter(pos == "FWD", status != "u") %>% 
+  filter(pos == "FWD", status != "u", total_points != 0) %>% 
   select(-one_of('status')) -> FWD
 
 FWD %>% 

@@ -1,0 +1,71 @@
+BALANCED
+      code count           name cost pos team
+5   101188   166          Digne  6.0 DEF  EVE
+8   102057   339        Jiménez  7.5 FWD  WOL
+10   10318   322   Stekelenburg  4.0 GKP  EVE
+41  131897   165           Ryan  4.5 GKP  BHA
+51  153723   261      Lundstram  4.0 DEF  SHU
+55  165809   377 Bernardo Silva  8.0 MID  MCI
+67  176413   224        Pulisic  7.5 MID  CHE
+84   18832   173       Stearman  4.0 DEF  SHU
+117 214590   310    Wan-Bissaka  5.5 DEF  MUN
+125 231372   158       Ndombele  6.0 MID  TOT
+164  48717   363           Reid  4.0 DEF  WHU
+171  54694   207     Aubameyang 11.0 FWD  ARS
+173  55422   198     Sigurdsson  8.0 MID  EVE
+234  90105   193         Fraser  7.5 MID  BOU
+240  92217   187        Firmino  9.5 FWD  LIV
+
+MIDFIELD
+      code count           name cost pos team
+8   102057   284        Jiménez  7.5 FWD  WOL
+11   10318   287   Stekelenburg  4.0 GKP  EVE
+14  103955   158       Sterling 12.0 MID  MCI
+28  118748   258          Salah 12.5 MID  LIV
+47  153723   293      Lundstram  4.0 DEF  SHU
+51  165809   234 Bernardo Silva  8.0 MID  MCI
+64  176297   110       Rashford  8.5 FWD  MUN
+76   18499   157       McGovern  4.0 GKP  NOR
+78   18832   189       Stearman  4.0 DEF  SHU
+107 214590   116    Wan-Bissaka  5.5 DEF  MUN
+148  48717   351           Reid  4.0 DEF  WHU
+153  55422   115     Sigurdsson  8.0 MID  EVE
+184  78007    98           King  6.5 FWD  BOU
+196  83428   192         Hanley  4.0 DEF  NOR
+209  90105   127         Fraser  7.5 MID  BOU
+
+FORWARD
+      code count           name cost pos team
+2   101188    91          Digne  6.0 DEF  EVE
+8    10318   214   Stekelenburg  4.0 GKP  EVE
+42  153723   154      Lundstram  4.0 DEF  SHU
+46  165809   111 Bernardo Silva  8.0 MID  MCI
+57  176413   105        Pulisic  7.5 MID  CHE
+63  182539    95       Ceballos  5.5 MID  ARS
+66   18499    94       McGovern  4.0 GKP  NOR
+68   18832   119       Stearman  4.0 DEF  SHU
+106 231372   110       Ndombele  6.0 MID  TOT
+108 232980   107         Aarons  4.5 DEF  NOR
+114  37572   176         Agüero 12.0 FWD  MCI
+136  48717   213           Reid  4.0 DEF  WHU
+142  54694   143     Aubameyang 11.0 FWD  ARS
+174  78830   124           Kane 11.0 FWD  TOT
+181  82403    93           Zaha  7.0 MID  CRY
+
+SAMPLED
+      code count           name cost pos team
+8   102057   272        Jiménez  7.5 FWD  WOL
+10   10318   347   Stekelenburg  4.0 GKP  EVE
+45  153723   251      Lundstram  4.0 DEF  SHU
+49  165809   269 Bernardo Silva  8.0 MID  MCI
+64  176413   183        Pulisic  7.5 MID  CHE
+75  182539   127       Ceballos  5.5 MID  ARS
+78   18499   159       McGovern  4.0 GKP  NOR
+80   18832   193       Stearman  4.0 DEF  SHU
+112 214590   177    Wan-Bissaka  5.5 DEF  MUN
+130  37572   132         Agüero 12.0 FWD  MCI
+158  48717   373           Reid  4.0 DEF  WHU
+165  54694   157     Aubameyang 11.0 FWD  ARS
+210  82403   122           Zaha  7.0 MID  CRY
+214  83428   179         Hanley  4.0 DEF  NOR
+228  90105   148         Fraser  7.5 MID  BOU

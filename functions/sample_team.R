@@ -1,7 +1,8 @@
 sample_team <- function(data, GKP, DEF, MID, FWD, type, approach, tolerance){
 
   team <- character(15)
-    
+  pos <- character(15)
+  
   for (i in 1:15){
     #sample position of player that will be sampled...
     position_limit <- FALSE
@@ -27,6 +28,8 @@ sample_team <- function(data, GKP, DEF, MID, FWD, type, approach, tolerance){
       niter <- niter + 1
     }
     
+    pos[i] <- position
+    
     if(niter == 100){
       team[i] <- NA
     } else{
@@ -47,6 +50,7 @@ sample_team <- function(data, GKP, DEF, MID, FWD, type, approach, tolerance){
       #add sampled player to the team
       team[i] <- player
     }  
+
   }
   
   if(any(is.na(team))){

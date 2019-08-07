@@ -13,10 +13,10 @@ source("functions/sample_team.R")
 
 #number of simulations
 nsim <- 1000
-#type of simulation - only_played or inlude_fresh
-type <- "only_played"
+#type of simulation - only_played or include_fresh
+type <- "include_fresh"
 #sample approach of selecting team?
-sample_approach <- FALSE
+sample_approach <- TRUE
 
 #load data
 if(type == "include_fresh"){
@@ -48,8 +48,10 @@ if(sample_approach == TRUE){
   simulation <- pbsapply(1:nsim, function(x) sample_team(data, gkp, def, mid, 
                                                          fwd, type = type, 
                                                          approach = "forward", 
-                                                         tolerance = 1))
+                                                         tolerance = 1.1))
 }
+
+sapply(simulation, is.null) %>% sum
 
 simulation %>% 
   unlist %>% 
@@ -88,6 +90,6 @@ selected <- simulation[which(lp$solution == 1), ]
 table(selected$pos)
 table(selected$team)
 sum(selected$cost)
-
+selected %>% select(code, count, name, cost, pos, team)
 #example of one simulation
 # t <- sample_team(data, gkp, def, mid, fwd, type = "only_played", approach = "balanced", tolerance = 1)
