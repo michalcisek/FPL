@@ -1,3 +1,6 @@
+![Alt text](fpl_helper_1819.svg)
+<img src="fpl_helper_1819.svg">
+
 # FPL
 
 In order to run simulation before start of new FPL season execute the following scripts in given order.
